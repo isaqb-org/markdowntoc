@@ -17,14 +17,21 @@ class LeanMarkdownToc {
     static final String TO_TIPS_FILENAME =
             "$TABLE_OF_DIR/generated-table-of-tips.md"
 
-    static final String TIPS_INDICATOR = "#### Tip"
+    static final String TIPS_MATCHER = /#### Tip*/
+    static final String WRONG_TIPS_MATCHER = /^#{1,3} Tip/
+
+    static final String QUESTION_FORMAT = /#### Question*/
 
     static final String TO_QUESTIONS_FILENAME =
             "$TABLE_OF_DIR/generated-table-of-questions.md"
 
     static final String MARKDOWN_EXTENSION = ".md"
 
-    static final nrOfTips = 0
+    static int nrOfTips = 0
+    static int nrOfQuestions = 0
+
+    static ArrayList<?> tips
+    static ArrayList<String> questions
 
     static void traverseMarkdownFiles(File contentDir) {
         contentDir.eachFileRecurse(FILES) { currentFile ->
@@ -37,20 +44,51 @@ class LeanMarkdownToc {
     static void traverseFile(File currentFile) {
         println "processing $currentFile"
         currentFile.eachLine { currentLine ->
-            if (currentLine =~ /#### Tip*/) {
-                processTip(currentLine)
-            }
-            //else if (currentLine =~ /### Tip/ )
+            processLine( currentLine, currentFile )
+        }
+
+    }
+
+    static void processLine( String currentLine, File currentFile) {
+        checkTip( currentLine, currentFile )
+        checkQuestion( currentLine, currentFile)
+    }
+
+
+    // 1.) include tips into table-of-tips,
+    // 2.) issue warning if tip is wrongly formated
+    static void checkTip( String currentLine, File currentFile ) {
+        if (currentLine =~ TIPS_MATCHER ) {
+            includeTipInTableOfTips( currentLine )
         }
     }
 
-    private static processTip(String currentLine) {
+
+    private static includeTipInTableOfTips( String currentLine) {
+        tips.add( currentLine )
+        nrOfTips++
+    }
+
+    // 1.) include tips into table-of-tips,
+    // 2.) issue warning if tip is wrongly formated
+    static void checkQuestion( String currentLine, File currentFile ) {
+        if (currentLine =~ /#### Question*/) {
+            includeQuestionInTableOfQuestions( currentLine )
+        }
+    }
+    private static includeQuestionInTableOfQuestions( String currentLine ) {
         println currentLine
     }
+
 
     static void main(String[] args) {
         def dir = new File(MANUSCRIPT_DIR)
 
+        tips = new ArrayList<String>()
+
         traverseMarkdownFiles(dir)
+
+        println "Found $nrOfTips tips:"
+        println tips
     }
 }
