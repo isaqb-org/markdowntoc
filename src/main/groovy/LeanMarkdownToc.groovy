@@ -17,7 +17,7 @@ class LeanMarkdownToc {
     static final String TO_TIPS_FILENAME =
             "$TABLE_OF_DIR/generated-table-of-tips.md"
 
-    static final String TIPS_MATCHER = /#### Tip*/
+    static final String TIPS_MATCHER = /^#### Tip*/
     static final String WRONG_TIPS_MATCHER = /^#{1,3} Tip/
 
     static final String QUESTION_FORMAT = /#### Question*/
@@ -80,6 +80,9 @@ class LeanMarkdownToc {
         println currentLine
     }
 
+    static boolean isCorrectTip( String line ) {
+        return (line =~ TIPS_MATCHER)
+    }
 
     static void main(String[] args) {
         def dir = new File(MANUSCRIPT_DIR)

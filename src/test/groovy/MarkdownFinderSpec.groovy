@@ -17,7 +17,8 @@ class MarkdownFinderSpec extends Specification {
     @Unroll
     def "find tips in markdown"() {
         expect:
-        assertEquals( (line =~ LeanMarkdownToc.TIPS_MATCHER), isCorrectTipFormat )
+        LeanMarkdownToc.isCorrectTip( line ) == isCorrectTipFormat
+        // assertEquals( (line =~ LeanMarkdownToc.TIPS_MATCHER), isCorrectTipFormat )
 
         where:
 
