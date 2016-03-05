@@ -69,8 +69,9 @@ class LeanMarkdownToc {
         nrOfTips++
     }
 
-    // 1.) include tips into table-of-tips,
-    // 2.) issue warning if tip is wrongly formated
+
+    // 1.) include question into table-of-questions,
+    // 2.) issue warning if question is wrongly formated
     static void checkQuestion( String currentLine, File currentFile ) {
         if (currentLine =~ /#### Question*/) {
             includeQuestionInTableOfQuestions( currentLine )
