@@ -1,8 +1,13 @@
 class Tip {
+    static final String TIPS_MATCHER = /^#### Tip*/
+    static final String WRONG_TIPS_MATCHER = /^#{1,3} Tip/
+
+
     String  fileName // the markdown filename where this tip is defined
     String  chapter
     int     number
     String  title
+
 
     String toString() {
         return "Tip " + chapterAndNumber().toUpperCase()
@@ -18,6 +23,16 @@ class Tip {
 
         return """[Tip ${chapNr.toUpperCase()}](#tip-${chapNr.toLowerCase()})"""
     }
+
+    /**
+     * checks if @param line complies to our "Tip" convention
+     * (4 leading '#' etc.)
+     * @param line: check if this is a "Tip"
+     */
+    static Boolean isTip( String line) {
+        return (line =~ TIPS_MATCHER)
+    }
+
 }
 
 /************************************************************************

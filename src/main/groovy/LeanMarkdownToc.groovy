@@ -17,8 +17,6 @@ class LeanMarkdownToc {
     static final String TO_TIPS_FILENAME =
             "$TABLE_OF_DIR/generated-table-of-tips.md"
 
-    static final String TIPS_MATCHER = /^#### Tip*/
-    static final String WRONG_TIPS_MATCHER = /^#{1,3} Tip/
 
     static final String QUESTION_FORMAT = /#### Question*/
 
@@ -58,7 +56,7 @@ class LeanMarkdownToc {
     // 1.) include tips into table-of-tips,
     // 2.) issue warning if tip is wrongly formated
     static void checkTip( String currentLine, File currentFile ) {
-        if (currentLine =~ TIPS_MATCHER ) {
+        if (currentLine =~ Tip.TIPS_MATCHER ) {
             includeTipInTableOfTips( currentLine )
         }
     }
@@ -82,7 +80,7 @@ class LeanMarkdownToc {
     }
 
     static boolean isCorrectTip( String line ) {
-        return (line =~ TIPS_MATCHER)
+        return (Tip.isTip( line ))
     }
 
     static void main(String[] args) {
