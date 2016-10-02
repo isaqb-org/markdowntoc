@@ -1,33 +1,20 @@
-class Tip {
-    static final String TIPS_MATCHER = /^#### Tip*/
-    static final String WRONG_TIPS_MATCHER = /^#{1,3} Tip/
+package org.arc42.markdowntoc
 
+class Tip  {
+    static final String TIPS_MATCHER = /^#### Tip\s*/
+    static final String WRONG_TIPS_MATCHER = /^#{1,3} org.arc42.markdowntoc.Tip/
 
-    String  fileName // the markdown filename where this tip is defined
-    String  chapter
-    int     number
     String  title
 
 
     String toString() {
-        return "Tip " + chapterAndNumber().toUpperCase()
-            + title
-    }
-
-    String chapterAndNumber() {
-        return chapter + "-" + number
-    }
-
-    String toMarkdownLink() {
-        String chapNr = chapterAndNumber()
-
-        return """[Tip ${chapNr.toUpperCase()}](#tip-${chapNr.toLowerCase()})"""
+        return "org.arc42.markdowntoc.Tip " + title
     }
 
     /**
-     * checks if @param line complies to our "Tip" convention
+     * checks if @param line complies to our "org.arc42.markdowntoc.Tip" convention
      * (4 leading '#' etc.)
-     * @param line: check if this is a "Tip"
+     * @param line: check if this is a "org.arc42.markdowntoc.Tip"
      */
     static Boolean isTip( String line) {
         return (line =~ TIPS_MATCHER)

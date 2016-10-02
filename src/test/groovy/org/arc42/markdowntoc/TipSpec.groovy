@@ -1,17 +1,29 @@
+package org.arc42.markdowntoc
+
 import spock.lang.Specification
 
 class TipSpec extends Specification {
 
     Tip awesomeTip
 
-    def setup() {
-        awesomeTip = new Tip( chapter: "IV", number: 12, title: "Be awesome")
-    }
 
-    def "ToMarkdownLink"() {
+
+    def "can recognize tips"( String tipLine, Boolean isValidTip) {
 
         expect:
-        awesomeTip.toMarkdownLink() == "[Tip IV-12](#tip-iv-12)"
+            Tip.isTip( tipLine) == isValidTip
+
+        where:
+        tipLine                                 | isValidTip
+        "#### Tip I-1 Our numbering"            | true
+        "#### Tip III-9: Document Unmistakably" | true
+
+        "#### Question VII-A-1"                 | false
+        "Tip 42: Plain Wrong"                   | false
+        "# A Heading Tip"                       | false
+        "## Another Tip"                        | false
+        "just a tip in text"                    | false
+
     }
 }
 

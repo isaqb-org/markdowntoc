@@ -90,7 +90,7 @@ class LeanMarkdownToc {
 
         traverseMarkdownFiles(dir)
 
-        println "Found $nrOfTips tips:"
+        println "Found $nrOfTips questions:"
         println tips
     }
 }
