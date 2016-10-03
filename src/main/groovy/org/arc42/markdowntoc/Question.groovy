@@ -1,37 +1,35 @@
 package org.arc42.markdowntoc
 
-class Anchor {
-
-    static final String ANCHOR_MATCHER = /^\{#(.)*\}/
-
-    static final String PURE_ANCHOR_MATCHER = /^#(.)*/
+class Question extends AnchoredMarkdownHeading {
 
 
-    //
-    private String pureAnchor
-
-    Anchor( String completeAnchorLine ) {
-        this.pureAnchor = completeAnchorLine
-                            .replace("{", "")
-                            .replace("}", "")
-
-        assert this.pureAnchor =~ PURE_ANCHOR_MATCHER
-    }
+    static final String HEADING_TYPE_NAME = "Question"
 
 
-    String getPureAnchor() {
-       return pureAnchor
-    }
+    static final String QUESTION_MATCHER = /^####\sQuestion\s*/
+    static final String PURE_QUESTION_MATCHER = /^Question\s*/
+
+    static final String BAD_QUESTION_MATCHER = /^#{1,3} Question/
+
 
     String toString() {
-        return "org.arc42.markdowntoc.Anchor " + pureAnchor
+        return "org.arc42.markdowntoc.Question " + pureHeadingText
     }
 
-    /**
-     * checks if @param line complies to our "org.arc42.markdowntoc.Anchor" convention
-     **/
-    static Boolean isAnchor( String line) {
-        return (line =~ ANCHOR_MATCHER)
+    Question( String line) {
+        super(line)
+    }
+
+    @Override
+    void setPureHeading() {
+        super.setPureHeading()
+
+        assert pureHeadingText =~ PURE_QUESTION_MATCHER
+
+    }
+
+    static boolean isQuestion(String line) {
+        return (line =~ QUESTION_MATCHER)
     }
 
 }

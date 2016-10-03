@@ -1,22 +1,34 @@
 package org.arc42.markdowntoc
 
-class Tip  {
+class Tip extends AnchoredMarkdownHeading {
+
+    static final String HEADING_TYPE_NAME = "Tip"
+
     static final String TIPS_MATCHER = /^#### Tip\s*/
-    static final String WRONG_TIPS_MATCHER = /^#{1,3} org.arc42.markdowntoc.Tip/
+    static final String PURE_TIP_MATCHER = /^Tip\s*/
 
-    String  title
+    static final String WRONG_TIPS_MATCHER = /^#{1,3} Tip/
 
 
-    String toString() {
-        return "org.arc42.markdowntoc.Tip " + title
+    Tip( String completeLine ) {
+        super()
+        this.completeHeadingLine
+        this.setPureHeading()
     }
 
-    /**
-     * checks if @param line complies to our "org.arc42.markdowntoc.Tip" convention
-     * (4 leading '#' etc.)
-     * @param line: check if this is a "org.arc42.markdowntoc.Tip"
-     */
-    static Boolean isTip( String line) {
+    String toString() {
+        return "org.arc42.markdowntoc.Tip " + pureHeadingText
+    }
+
+    @Override
+    void setPureHeading() {
+        super.setPureHeading()
+
+        assert pureHeadingText =~ PURE_TIP_MATCHER
+
+    }
+
+    static boolean matches(String line) {
         return (line =~ TIPS_MATCHER)
     }
 

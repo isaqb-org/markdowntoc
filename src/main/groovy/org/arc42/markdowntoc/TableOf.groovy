@@ -1,22 +1,32 @@
-/**
- * A Heading instance will consist of a text and an anchor.
- * For example, in a markdown file you may find:
- * {#q-D-1}
- * #### Question D-1: Is Groovy cool?
- *
- * The anchor is '#q-D-1', the text is 'Is Groovy cool?'
- */
-class Heading {
-    String anchor
-    String text
+package org.arc42.markdowntoc
+// represents a table-of-<something>, where <something>
+// is (as of today) either
 
-    Heading( String pAnchor, String pText) {
-        this.anchor = pAnchor
-        this.text = pText
+class TableOf<T extends AnchoredMarkdownHeading> implements Iterable {
+
+    private List<T> tableOfSomething = new ArrayList<T>()
+
+    // generic constructur without type parameter
+    //TableOf() {
+    //    this.tableOfSomething = new ArrayList<T>()
+    //}
+
+
+    void addEntry( AnchoredMarkdownHeading amh) {
+        tableOfSomething.add( amh )
     }
 
-}
+    int size() {
+        return tableOfSomething.size()
+    }
 
+    @Override
+    public Iterator<T> iterator() {
+        return tableOfSomething.iterator();
+    }
+
+
+}
 
 /************************************************************************
  * This is free software - without ANY guarantee!

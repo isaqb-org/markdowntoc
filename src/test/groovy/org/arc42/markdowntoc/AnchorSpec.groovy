@@ -29,6 +29,28 @@ class AnchorSpec extends Specification {
     }
 
 
+    def "can create correct anchor instances"(String line, String pureAnchor) {
+        when:
+            Anchor anc = new Anchor(line)
+
+        then:
+            anc.getPureAnchor() == pureAnchor
+
+        where:
+        line | pureAnchor
+        "{#q-A-1}"    | "#q-A-1"
+        "{#q-A-2}"    | "#q-A-2"
+        "{#tipp-I-1}" | "#tipp-I-1"
+
+    }
+
+    def "bad anchor throws AssertionError"() {
+        when:
+         Anchor anc = new Anchor( "{bad-anchor}")
+
+        then:
+        thrown AssertionError
+    }
 }
 
 /************************************************************************

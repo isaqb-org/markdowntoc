@@ -1,20 +1,21 @@
 package org.arc42.markdowntoc
 
 import spock.lang.Specification
+import spock.lang.Unroll
 
 class TipSpec extends Specification {
 
     Tip awesomeTip
 
 
-
-    def "can recognize tips"( String tipLine, Boolean isValidTip) {
+    @Unroll
+    def "can recognize tips"(String tipLine, Boolean isValidTipFormat) {
 
         expect:
-            Tip.isTip( tipLine) == isValidTip
+        Tip.matches(tipLine) == isValidTipFormat
 
         where:
-        tipLine                                 | isValidTip
+        tipLine                                 | isValidTipFormat
         "#### Tip I-1 Our numbering"            | true
         "#### Tip III-9: Document Unmistakably" | true
 
@@ -24,6 +25,22 @@ class TipSpec extends Specification {
         "## Another Tip"                        | false
         "just a tip in text"                    | false
 
+        "# Tip I-14: Hold your breath"          | false
+        "## Tip II-14: Hold your breath"        | false
+        "### Tip III-14: Hold your breath"      | false
+        "#### Tip IV-14: Hold your breath"      | true
+        "#### Tip IV-3:"                        | true
+        "###### Tip VI-9: Too deeply nested"    | false
+
+    }
+
+
+    def "bad tip throws AssertionError"() {
+        when:
+        Tip tip = new Tip("### Tip: Bad Heading Level")
+
+        then:
+        thrown AssertionError
     }
 }
 
