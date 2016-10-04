@@ -11,6 +11,9 @@ class TableOf<T extends AnchoredMarkdownHeading> implements Iterable {
     //    this.tableOfSomething = new ArrayList<T>()
     //}
 
+    List<T> getAllHeadings() {
+        return tableOfSomething
+    }
 
     void addEntry( AnchoredMarkdownHeading amh) {
         tableOfSomething.add( amh )

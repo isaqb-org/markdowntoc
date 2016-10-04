@@ -12,8 +12,8 @@ class Anchor {
 
     Anchor( String completeAnchorLine ) {
         this.pureAnchor = completeAnchorLine
-                            .replace("{", "")
-                            .replace("}", "")
+                           .substring(completeAnchorLine.indexOf("{") + 1, completeAnchorLine.indexOf("}"))
+                           .trim()
 
         assert this.pureAnchor =~ PURE_ANCHOR_MATCHER
     }

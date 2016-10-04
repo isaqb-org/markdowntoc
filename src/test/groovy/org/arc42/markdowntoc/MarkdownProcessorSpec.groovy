@@ -9,9 +9,12 @@ class MarkdownProcessorSpec extends Specification {
     MarkdownProcessor mdp
 
 
+
     def "can find question with anchor"() {
         given:
-            String md = """{#q-J-1} \n#### Question J-1: How to?\n<t.b.d.>"""
+            String pureQuestion = "Question J-1: How to?"
+            String pureAnchor   = "#q-J-1"
+            String md = """{$pureAnchor} \n#### $pureQuestion\n<t.b.d.>"""
             mdp = new MarkdownProcessor( md )
 
         when:
@@ -19,6 +22,8 @@ class MarkdownProcessorSpec extends Specification {
 
         then:
             toQ.size() == 1
+            toQ.getAllHeadings().get(0).pureHeadingText == pureQuestion
+            toQ.getAllHeadings().get(0).anchor.pureAnchor == pureAnchor
 
 
     }

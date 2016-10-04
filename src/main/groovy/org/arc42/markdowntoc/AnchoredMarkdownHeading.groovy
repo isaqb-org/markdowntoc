@@ -27,7 +27,7 @@ abstract class AnchoredMarkdownHeading {
     void setPureHeading() {
         pureHeadingText = completeHeadingLine
                 .replace( MD_HEADING_PREFIX, "")
-                .stripIndent()
+                .trim()
 
     }
 

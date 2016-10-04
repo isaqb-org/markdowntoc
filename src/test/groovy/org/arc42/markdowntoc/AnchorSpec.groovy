@@ -38,9 +38,11 @@ class AnchorSpec extends Specification {
 
         where:
         line | pureAnchor
-        "{#q-A-1}"    | "#q-A-1"
-        "{#q-A-2}"    | "#q-A-2"
-        "{#tipp-I-1}" | "#tipp-I-1"
+        "{#q-A-1}"     | "#q-A-1"
+        "{#q-A-2}"     | "#q-A-2"
+        "{#tipp-I-1}"  | "#tipp-I-1"
+        "{#q-A-3} "    | "#q-A-3"
+        "{#q-A-4} bla" | "#q-A-4"
 
     }
 
