@@ -6,10 +6,14 @@ class TableOf<T extends AnchoredMarkdownHeading> implements Iterable {
 
     private List<T> tableOfSomething = new ArrayList<T>()
 
-    // generic constructur without type parameter
-    //TableOf() {
-    //    this.tableOfSomething = new ArrayList<T>()
-    //}
+
+    String toString() {
+
+        return tableOfSomething.join("\n")
+
+    }
+
+
 
     List<T> getAllHeadings() {
         return tableOfSomething
@@ -21,6 +25,10 @@ class TableOf<T extends AnchoredMarkdownHeading> implements Iterable {
 
     int size() {
         return tableOfSomething.size()
+    }
+
+    void append( TableOf<T> newTable ) {
+        tableOfSomething += newTable
     }
 
     @Override

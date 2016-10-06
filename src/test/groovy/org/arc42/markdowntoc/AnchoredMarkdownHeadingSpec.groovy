@@ -1,31 +1,22 @@
 package org.arc42.markdowntoc
 
-class Tip extends AnchoredMarkdownHeading {
+import spock.lang.Specification
 
-    static final String HEADING_TYPE_NAME = "Tip"
+class AnchoredMarkdownHeadingSpec extends Specification {
+    def "can create Markdown content line"() {
+        given:
+        final String ts = "Tip V-1: Eat healthy!"
+        final String an = "#tip-v-1"
 
-    static final String TIPS_MATCHER = /^#### Tip\s*/
-    static final String PURE_TIP_MATCHER = /^Tip\s*/
+        when:
+        Tip tip = new Tip("#### $ts")
+        tip.setAnchor("{$an}")
+        String contentLine = tip.toMarkdownContentLine()
 
-    static final String WRONG_TIPS_MATCHER = /^#{1,3} Tip/
+        then:
+        contentLine == "[$ts]($an)"
 
-
-    Tip( String completeLine ) {
-        super( completeLine )
     }
-
-    @Override
-    void setPureHeading() {
-        super.setPureHeading()
-
-        assert pureHeadingText =~ PURE_TIP_MATCHER
-    }
-
-    static boolean matches(String line) {
-        return (line =~ TIPS_MATCHER)
-    }
-
-
 }
 
 /************************************************************************

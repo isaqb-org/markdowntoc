@@ -32,66 +32,44 @@ class LeanMarkdownToc {
     static ArrayList<Tip> tips
     static ArrayList<String> questions
 
-    static void traverseMarkdownFiles(File contentDir) {
+    static TableOf<Question> toQuestions = new TableOf<Question>()
+    static TableOf<Tip>      toTips = new TableOf<Tip>()
+
+    static void traverseAllMarkdownFiles(File contentDir) {
         contentDir.eachFileRecurse(FILES) { currentFile ->
             if (currentFile.name.endsWith('.md')) {
-                traverseFile(currentFile)
+                traverseSingleFile(currentFile)
             }
         }
     }
 
-    static void traverseFile(File currentFile) {
+    static void traverseSingleFile(File currentFile) {
         println "processing $currentFile"
-        currentFile.eachLine { currentLine ->
-            processLine( currentLine, currentFile )
-        }
-
+        MarkdownProcessor mdp = new MarkdownProcessor( currentFile )
+        toQuestions.append( mdp.findAnchoredQuestions() )
+        toTips.append( mdp.findAnchoredTips())
     }
 
+
+    // old version - includes filename for better error handling
     static void processLine( String currentLine, File currentFile) {
-        checkTip( currentLine, currentFile )
-        checkQuestion( currentLine, currentFile)
+        //checkTip( currentLine, currentFile )
+        //checkQuestion( currentLine, currentFile)
     }
 
 
-    // 1.) include tips into table-of-tips,
-    // 2.) issue warning if tip is wrongly formated
-    static void checkTip( String currentLine, File currentFile ) {
-        if (currentLine =~ Tip.TIPS_MATCHER ) {
-            includeTipInTableOfTips( currentLine )
-        }
-    }
-
-
-    private static includeTipInTableOfTips( String currentLine) {
-        tips.add( currentLine )
-        nrOfTips++
-    }
-
-
-    // 1.) include question into table-of-questions,
-    // 2.) issue warning if question is wrongly formated
-    static void checkQuestion( String currentLine, File currentFile ) {
-        if (currentLine =~ /#### Question*/) {
-            includeQuestionInTableOfQuestions( currentLine )
-        }
-    }
-    private static includeQuestionInTableOfQuestions( String currentLine ) {
-        println currentLine
-    }
-
-    static boolean isCorrectTip( String line ) {
-        return (Tip.matchesType( line ))
-    }
 
     static void main(String[] args) {
         def dir = new File(MANUSCRIPT_DIR)
 
         tips = new ArrayList<String>()
 
-        traverseMarkdownFiles(dir)
+        traverseAllMarkdownFiles(dir)
 
-        println "Found $nrOfTips questions:"
-        println tips
+        println "Found ${toQuestions.size()} questions:"
+        println toQuestions.toString()
+
+        println "Found ${toTips.size()} tips:"
+        println toTips.toString()
     }
 }

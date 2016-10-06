@@ -24,6 +24,14 @@ abstract class AnchoredMarkdownHeading {
         this.setPureHeading()
     }
 
+    String toString() {
+        return pureHeadingText
+    }
+
+    String toMarkdownContentLine() {
+        return "[$pureHeadingText](${anchor.pureAnchor})"
+    }
+
     void setPureHeading() {
         pureHeadingText = completeHeadingLine
                 .replace( MD_HEADING_PREFIX, "")
@@ -38,6 +46,8 @@ abstract class AnchoredMarkdownHeading {
     void setAnchor( String anchorString ) {
         this.anchor = new Anchor( anchorString )
     }
+
+
 
 }
 

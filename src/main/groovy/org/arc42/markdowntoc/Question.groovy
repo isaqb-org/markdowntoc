@@ -12,10 +12,6 @@ class Question extends AnchoredMarkdownHeading {
     static final String BAD_QUESTION_MATCHER = /^#{1,3} Question/
 
 
-    String toString() {
-        return "org.arc42.markdowntoc.Question " + pureHeadingText
-    }
-
     Question( String line) {
         super(line)
     }
@@ -25,12 +21,13 @@ class Question extends AnchoredMarkdownHeading {
         super.setPureHeading()
 
         assert pureHeadingText =~ PURE_QUESTION_MATCHER
-
     }
+
 
     static boolean isQuestion(String line) {
         return (line =~ QUESTION_MATCHER)
     }
+
 
 }
 

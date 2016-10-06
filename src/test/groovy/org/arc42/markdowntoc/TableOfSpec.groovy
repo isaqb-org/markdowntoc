@@ -1,31 +1,46 @@
 package org.arc42.markdowntoc
 
-class Tip extends AnchoredMarkdownHeading {
+import spock.lang.Specification
 
-    static final String HEADING_TYPE_NAME = "Tip"
+class TableOfSpec extends Specification {
 
-    static final String TIPS_MATCHER = /^#### Tip\s*/
-    static final String PURE_TIP_MATCHER = /^Tip\s*/
-
-    static final String WRONG_TIPS_MATCHER = /^#{1,3} Tip/
+    TableOf<Question> toQ
 
 
-    Tip( String completeLine ) {
-        super( completeLine )
+    def setup() {
+        toQ = new TableOf<Question>()
+
     }
 
-    @Override
-    void setPureHeading() {
-        super.setPureHeading()
+    def "can append tableOfQuestions to empty tableOf"() {
+        given:
+        Question q = new Question("#### Question 1: Why?")
+        TableOf<Question> newToQ = new TableOf<Question>()
+        newToQ.addEntry(q)
 
-        assert pureHeadingText =~ PURE_TIP_MATCHER
+
+        when:
+        toQ.append(newToQ)
+
+        then:
+        toQ.size() == 1
     }
 
-    static boolean matches(String line) {
-        return (line =~ TIPS_MATCHER)
+    def "can append toQ to existing table"() {
+       given:
+       Question q = new Question("#### Question 1: Why?")
+
+       toQ.addEntry(q)
+
+       TableOf<Question> newToQ = new TableOf<Question>()
+       newToQ.addEntry(q)
+
+        when:
+        toQ.append( newToQ )
+
+        then:
+        toQ.size() == 2
     }
-
-
 }
 
 /************************************************************************

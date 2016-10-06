@@ -13,36 +13,35 @@ class MarkdownProcessor {
     private ArrayList<String> lines
 
 
-    MarkdownProcessor(File pFile ) {
+    MarkdownProcessor(File pFile) {
         lines = pFile.readLines()
     }
 
     MarkdownProcessor(String text) {
-       lines = text.readLines()
+        lines = text.readLines()
     }
 
-    void traverseMarkdown() {
-        println lines
-    }
 
     int getNrOfLines() {
         return lines.size()
     }
+
     /**
      * searches the given markdown for "Questions" which have an anchor.
      * When question is found without appropriate anchor, exception is thrown...
      * @return
      */
-    TableOf<Question> findAnchoredQuestions()  {
+    TableOf<Question> findAnchoredQuestions() {
         String previousLine = ""
 
         TableOf<Question> toQ = new TableOf<Question>()
         AnchoredMarkdownHeading question
 
+
         lines.each { currentLine ->
             assert currentLine.class == java.lang.String
-            def isq = Question.isQuestion(currentLine)
-            if (Question.isQuestion( currentLine)) {
+
+            if (Question.isQuestion(currentLine)) {
                 // we found a question
                 question = new Question(currentLine)
 
@@ -55,13 +54,46 @@ class MarkdownProcessor {
             }
 
             previousLine = currentLine
-
         }
 
         return toQ
     }
 
+
+    TableOf<Tip> findAnchoredTips() {
+        String previousLine = ""
+
+        TableOf<Tip> toT = new TableOf<Tip>()
+        AnchoredMarkdownHeading tip
+
+        lines.each { currentLine ->
+            assert currentLine.class == java.lang.String
+
+            if (Tip.matches(currentLine)) {
+                // we found a question
+                tip = new Tip(currentLine)
+
+                if (Anchor.isAnchor(previousLine)) {
+                    tip.setAnchor(previousLine)
+                    toT.addEntry(tip)
+                } else {
+                    //assert false: "$currentLine has no anchor - aborted."
+                    println "v"*50
+                    println "$currentLine has no anchor!!"
+                    println "^"*50
+                }
+            }
+
+            previousLine = currentLine
+        }
+
+        return toT
+    }
+
+
 }
+
+
 
 /************************************************************************
  * This is free software - without ANY guarantee!
