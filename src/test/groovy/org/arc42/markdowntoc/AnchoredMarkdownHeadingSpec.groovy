@@ -3,9 +3,32 @@ package org.arc42.markdowntoc
 import spock.lang.Specification
 
 class AnchoredMarkdownHeadingSpec extends Specification {
+
+    final String gTITLE = "Eat healthy!"
+    final String gID    = "Tip V-1:"
+    String ts
+
+    def setup() {
+        final String ts = "#### $gID $gTITLE"
+    }
+
+
+    def "can split Tip, ID and net content"() {
+        given:
+            Tip tip = new Tip( ts )
+
+        when:
+            tip.setTypeIDAndTitle()
+
+        then:
+            tip.title == gTITLE
+            tip.typeAndID == gID
+    }
+
+
+
     def "can create Markdown content line"() {
         given:
-        final String ts = "Tip V-1: Eat healthy!"
         final String an = "#tip-v-1"
 
         when:

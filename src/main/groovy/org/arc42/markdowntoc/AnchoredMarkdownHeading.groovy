@@ -14,6 +14,10 @@ abstract class AnchoredMarkdownHeading {
 
     protected Anchor anchor
 
+    protected String typeAndID // e.g. "Tip IV-107"
+    protected String title     // a.g. "Create at least a domain-model"
+
+
     AnchoredMarkdownHeading() {
         this.completeHeadingLine = ""
         this.pureHeadingText     = ""
@@ -36,6 +40,10 @@ abstract class AnchoredMarkdownHeading {
         pureHeadingText = completeHeadingLine
                 .replace( MD_HEADING_PREFIX, "")
                 .trim()
+
+    }
+
+    void setTypeIDAndTitle() {
 
     }
 

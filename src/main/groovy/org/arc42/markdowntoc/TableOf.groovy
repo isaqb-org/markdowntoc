@@ -31,6 +31,15 @@ class TableOf<T extends AnchoredMarkdownHeading> implements Iterable {
         tableOfSomething += newTable
     }
 
+
+
+    String toMarkdownTable() {
+        def SEPRTOR = "|----------------|\n"
+
+        return tableOfSomething.join(SEPRTOR)
+
+    }
+
     @Override
     public Iterator<T> iterator() {
         return tableOfSomething.iterator();
