@@ -9,7 +9,8 @@ import static groovy.io.FileType.FILES
 
 class LeanMarkdownToc {
 
-    static final String BOOK_DIR = "/Users/gernotstarke/projects/arc42-in-practice"
+    static final String USERNAME = System.getenv("USER")
+    static final String BOOK_DIR = "/Users/${USERNAME}/projects/arc42-in-practice"
 
     static final String MANUSCRIPT_DIR = "${BOOK_DIR}/manuscript"
 
