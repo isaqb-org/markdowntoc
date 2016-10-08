@@ -5,23 +5,20 @@ import spock.lang.Specification
 class AnchoredMarkdownHeadingSpec extends Specification {
 
     final String gTITLE = "Eat healthy!"
-    final String gID    = "Tip V-1:"
-    String ts
+    final String gID    = "Tip V-1"
+    final String ts     =  "#### $gID: $gTITLE"
+    Tip tip
+
 
     def setup() {
-        final String ts = "#### $gID $gTITLE"
+        tip = new Tip( ts )
+
     }
 
-
     def "can split Tip, ID and net content"() {
-        given:
-            Tip tip = new Tip( ts )
 
-        when:
-            tip.setTypeIDAndTitle()
-
-        then:
-            tip.title == gTITLE
+        expect:
+            tip.pureTitle == gTITLE
             tip.typeAndID == gID
     }
 
@@ -32,12 +29,11 @@ class AnchoredMarkdownHeadingSpec extends Specification {
         final String an = "#tip-v-1"
 
         when:
-        Tip tip = new Tip("#### $ts")
         tip.setAnchor("{$an}")
-        String contentLine = tip.toMarkdownContentLine()
+        String contentLine = tip.toMarkdownTableRow()
 
         then:
-        contentLine == "[$ts]($an)"
+        contentLine == "|[${tip.typeAndID}]($an) |${tip.pureTitle}|"
 
     }
 }

@@ -9,7 +9,7 @@ import static groovy.io.FileType.FILES
 
 class LeanMarkdownToc {
 
-    static final String BOOK_DIR = "/Users/gstarke/projects/arc42-in-practice"
+    static final String BOOK_DIR = "/Users/gernotstarke/projects/arc42-in-practice"
 
     static final String MANUSCRIPT_DIR = "${BOOK_DIR}/manuscript"
 
@@ -34,6 +34,11 @@ class LeanMarkdownToc {
 
     static TableOf<Question> toQuestions = new TableOf<Question>()
     static TableOf<Tip>      toTips = new TableOf<Tip>()
+
+    static assertFilesExist( File dir ) {
+        assert dir.exists(), "\n\nDirectory $dir does not exist\n"
+    }
+
 
     static void traverseAllMarkdownFiles(File contentDir) {
         contentDir.eachFileRecurse(FILES) { currentFile ->
@@ -63,6 +68,8 @@ class LeanMarkdownToc {
         def dir = new File(MANUSCRIPT_DIR)
 
         tips = new ArrayList<String>()
+
+        assertFilesExist( dir )
 
         traverseAllMarkdownFiles(dir)
 

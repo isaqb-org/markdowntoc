@@ -16,10 +16,8 @@ class Question extends AnchoredMarkdownHeading {
         super(line)
     }
 
-    @Override
-    void setPureHeading() {
-        super.setPureHeading()
-
+    // checks if format of heading is correct
+    void assertCorrectFormat() {
         assert pureHeadingText =~ PURE_QUESTION_MATCHER
     }
 

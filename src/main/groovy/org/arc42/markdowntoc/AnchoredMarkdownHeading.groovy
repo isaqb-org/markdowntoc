@@ -5,45 +5,65 @@ abstract class AnchoredMarkdownHeading {
     static final String MD_HEADING_PREFIX = "####"
 
 
-    // including "#"-symbols and chapter-number
-    // e.g.: #### Question J-1: How to document (very) large systems with arc42
-    protected String completeHeadingLine
-
     // e.g.: Question J-1: How to document (very) large systems with arc42
     protected String pureHeadingText
 
     protected Anchor anchor
 
     protected String typeAndID // e.g. "Tip IV-107"
-    protected String title     // a.g. "Create at least a domain-model"
+    protected String pureTitle     // a.g. "Create at least a domain-model"
 
 
     AnchoredMarkdownHeading() {
-        this.completeHeadingLine = ""
         this.pureHeadingText     = ""
     }
 
     AnchoredMarkdownHeading(String completeLine ) {
-        this.completeHeadingLine = completeLine
-        this.setPureHeading()
+
+        this.extractPureHeadingAndID( completeLine)
     }
 
     String toString() {
         return pureHeadingText
     }
 
-    String toMarkdownContentLine() {
-        return "[$pureHeadingText](${anchor.pureAnchor})"
+    String toMarkdownTableRow() {
+        return "|[$typeAndID](${anchor.pureAnchor}) |$pureTitle|"
     }
 
-    void setPureHeading() {
-        pureHeadingText = completeHeadingLine
+    abstract void assertCorrectFormat()
+
+    static void complainIfIncorrectPrefix( String completeLine ) {
+        if (!completeLine.startsWith( MD_HEADING_PREFIX )) {
+            println "v"*50
+            println "Error: $completeLine does not start with $MD_HEADING_PREFIX"
+            println "^"*50
+        }
+
+    }
+
+
+    void extractPureHeadingAndID( completeLine ) {
+
+        complainIfIncorrectPrefix( completeLine )
+
+        pureHeadingText = completeLine
                 .replace( MD_HEADING_PREFIX, "")
                 .trim()
 
+        assertCorrectFormat()
+
+        setTypeIDAndTitle( this.pureHeadingText )
     }
 
-    void setTypeIDAndTitle() {
+    private void setTypeIDAndTitle( String pureHeading) {
+        def both = pureHeading.split(/: /)
+
+        assert both.length == 2
+
+        typeAndID = both[0].trim()
+        pureTitle = both[1].trim()
+
 
     }
 

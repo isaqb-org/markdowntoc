@@ -14,12 +14,12 @@ class Tip extends AnchoredMarkdownHeading {
         super( completeLine )
     }
 
-    @Override
-    void setPureHeading() {
-        super.setPureHeading()
 
+    // checks if format of heading is correct
+    final void assertCorrectFormat() {
         assert pureHeadingText =~ PURE_TIP_MATCHER
     }
+
 
     static boolean matches(String line) {
         return (line =~ TIPS_MATCHER)
