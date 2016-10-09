@@ -33,7 +33,7 @@ class AnchoredMarkdownHeadingSpec extends Specification {
         String contentLine = tip.toMarkdownTableRow()
 
         then:
-        contentLine == "|[${tip.typeAndID}]($an) |${tip.pureTitle}|"
+        contentLine == "|[${tip.typeAndID}]($an) |${tip.pureTitle} |\n"
 
     }
 }

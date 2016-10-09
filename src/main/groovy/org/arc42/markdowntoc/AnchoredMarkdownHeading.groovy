@@ -28,7 +28,7 @@ abstract class AnchoredMarkdownHeading {
     }
 
     String toMarkdownTableRow() {
-        return "|[$typeAndID](${anchor.pureAnchor}) |$pureTitle|"
+        return "|[$typeAndID](${anchor.pureAnchor}) |$pureTitle |\n"
     }
 
     abstract void assertCorrectFormat()

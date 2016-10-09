@@ -6,6 +6,9 @@ class TableOf<T extends AnchoredMarkdownHeading> implements Iterable {
 
     private List<T> tableOfSomething = new ArrayList<T>()
 
+    // either TIPS or QUESTIONS
+    private String typeName
+
 
     String toString() {
 
@@ -27,16 +30,20 @@ class TableOf<T extends AnchoredMarkdownHeading> implements Iterable {
         return tableOfSomething.size()
     }
 
+
     void append( TableOf<T> newTable ) {
         tableOfSomething += newTable
     }
 
 
 
-    String toMarkdownTable() {
-        def SEPRTOR = "|----------------|\n"
+    String toTwoColumnMarkdownTable() {
 
-        return tableOfSomething.join(SEPRTOR)
+        def TABLE_HEADER = "|ID/Link |$typeName    |\n"
+        def ROW_SEPARATOR = "|-------|-------------------|\n"
+
+
+        return TABLE_HEADER + ROW_SEPARATOR + tableOfSomething.join(ROW_SEPARATOR)
 
     }
 
