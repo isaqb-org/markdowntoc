@@ -4,6 +4,8 @@ package org.arc42.markdowntoc
 
 class TableOf<T extends AnchoredMarkdownHeading> implements Iterable {
 
+    final static String TWO_COLUMN_ROW_SEPARATOR = "|-------|-------------------|\n"
+
     private List<T> tableOfSomething = new ArrayList<T>()
 
     // either TIPS or QUESTIONS
@@ -37,14 +39,17 @@ class TableOf<T extends AnchoredMarkdownHeading> implements Iterable {
 
 
 
-    String toTwoColumnMarkdownTable() {
+    final String toTwoColumnMarkdownTable() {
 
-        def TABLE_HEADER = "|ID/Link |$typeName    |\n"
-        def ROW_SEPARATOR = "|-------|-------------------|\n"
-
-
-        return TABLE_HEADER + ROW_SEPARATOR + tableOfSomething.join(ROW_SEPARATOR)
-
+        // TODO: replace with inject(), could be more "functional"
+        // http://blog.octo.com/en/groovy-minute-inject/
+        // http://mrhaki.blogspot.com.cy/2009/09/groovy-goodness-using-inject-method.html
+        // https://kousenit.org/2014/10/14/spaceships-elvis-and-groovy-inject/
+        def result = ""
+        tableOfSomething.each { entry ->
+            result += entry.toMarkdownTwoColumnTableRow() + TWO_COLUMN_ROW_SEPARATOR
+        }
+        return result
     }
 
     @Override
@@ -53,6 +58,10 @@ class TableOf<T extends AnchoredMarkdownHeading> implements Iterable {
     }
 
 
+    final String createTwoColumnTableHeading() {
+       return "\n|ID/Link |$typeName    |\n" + TWO_COLUMN_ROW_SEPARATOR
+
+    }
 }
 
 /************************************************************************

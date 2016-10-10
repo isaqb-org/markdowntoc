@@ -15,11 +15,11 @@ class LeanMarkdownToc {
     static final String TO_TIPS_FILENAME = "generated-table-of-tips.md"
     static final String TO_QUESTIONS_FILENAME = "generated-table-of-questions.md"
 
-    static final String MARKDOWN_EXTENSION = ".md"
 
 
     static TableOf<Question> toQuestions = new TableOf<Question>(typeName: "Questions")
     static TableOf<Tip>      toTips = new TableOf<Tip>(typeName: "Tips")
+
 
     static assertFilesExist( File dir ) {
         assert dir.exists(), "\n\nDirectory $dir does not exist\n"
@@ -58,25 +58,31 @@ class LeanMarkdownToc {
 
     static void writeMarkdownFile( TableOf<AnchoredMarkdownHeading> tableOf, String filename) {
 
-        createFileToWrite(filename) << tableOf.toTwoColumnMarkdownTable()
+        def writer = createFileToWrite(filename)
+
+        writer << tableOf.createTwoColumnTableHeading()
+        writer << tableOf.toTwoColumnMarkdownTable()
+        writer.close()
 
         println "wrote $TABLE_OF_DIR/$filename."
     }
 
     static void main(String[] args) {
+        // TODO: Check username (gernotstarke, gstarke)
+
         def dir = new File(MANUSCRIPT_DIR)
         assertFilesExist( dir )
 
         traverseAllMarkdownFiles(dir)
 
-        writeMarkdownFile( toQuestions, TO_QUESTIONS_FILENAME)
-        println "Found ${toQuestions.size()} questions:"
         println toQuestions.toString()
-
-        writeMarkdownFile( toTips, TO_TIPS_FILENAME)
-        println "Found ${toTips.size()} tips:"
         println toTips.toString()
 
+        println "Found ${toQuestions.size()} questions:"
+        writeMarkdownFile( toQuestions, TO_QUESTIONS_FILENAME)
+
+        println "Found ${toTips.size()} tips:"
+        writeMarkdownFile( toTips, TO_TIPS_FILENAME)
 
     }
 }

@@ -30,7 +30,7 @@ class AnchoredMarkdownHeadingSpec extends Specification {
 
         when:
         tip.setAnchor("{$an}")
-        String contentLine = tip.toMarkdownTableRow()
+        String contentLine = tip.toMarkdownTwoColumnTableRow()
 
         then:
         contentLine == "|[${tip.typeAndID}]($an) |${tip.pureTitle} |\n"

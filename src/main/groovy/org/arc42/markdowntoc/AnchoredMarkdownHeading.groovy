@@ -27,7 +27,7 @@ abstract class AnchoredMarkdownHeading {
         return pureHeadingText
     }
 
-    String toMarkdownTableRow() {
+    String toMarkdownTwoColumnTableRow() {
         return "|[$typeAndID](${anchor.pureAnchor}) |$pureTitle |\n"
     }
 
