@@ -60,6 +60,7 @@ class LeanMarkdownToc {
 
         def writer = createFileToWrite(filename)
 
+        writer << tableOf.createGenerationDateFootnote()
         writer << tableOf.createTwoColumnTableHeading()
         writer << tableOf.toTwoColumnMarkdownTable()
         writer.close()

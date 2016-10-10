@@ -52,6 +52,10 @@ class TableOf<T extends AnchoredMarkdownHeading> implements Iterable {
         return result
     }
 
+    public String createGenerationDateFootnote() {
+        return "\n[to-generation]: Table generated: ${new Date().format("MMMM/dd/yyyy")}\n\n"
+    }
+
     @Override
     public Iterator<T> iterator() {
         return tableOfSomething.iterator();
@@ -59,7 +63,9 @@ class TableOf<T extends AnchoredMarkdownHeading> implements Iterable {
 
 
     final String createTwoColumnTableHeading() {
-       return "\n|ID/Link |$typeName    |\n" + TWO_COLUMN_ROW_SEPARATOR
+       return  "{width=\"90%\"}\n"
+               + "|ID/Link |$typeName    |\n"
+               + TWO_COLUMN_ROW_SEPARATOR
 
     }
 }
