@@ -41,6 +41,18 @@ class TableOfSpec extends Specification {
         then:
         toQ.size() == 2
     }
+
+    def "creates nice table heading"() {
+        when:
+            def toT = new TableOf<Tip>( typeName: "Tip")
+            def heading = toT.createTwoColumnTableHeading()
+        then:
+            heading.startsWith("""{width="90%"}""")
+            heading.contains("|Tip")
+            heading.contains("|ID/Link")
+            heading.contains(TableOf.TWO_COLUMN_ROW_SEPARATOR)
+
+    }
 }
 
 /************************************************************************
